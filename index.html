@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackerFab @ POLI USP | Microeletrônica Aberta</title>
+
+    <!-- Fontes do Google: Chakra Petch + Inter + JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons (para ícones gerais) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-primary: #070b12;
+            --bg-card: rgba(15, 23, 42, 0.8);
+            --bg-card-hover: rgba(26, 38, 61, 0.95);
+            --gold-primary: #f59e0b;
+            --gold-light: #fbbf24;
+            --gold-glow: rgba(245, 158, 11, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(245, 158, 11, 0.2);
+            --border-bright: rgba(245, 158, 11, 0.6);
+            --radius: 12px;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        .hero-title, .logo-text, .section-title, .card-title, .badge, .footer-title {
+            font-family: 'Chakra Petch', sans-serif !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(30, 58, 138, 0.15) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header e Navbar */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: rgba(7, 11, 18, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            height: 56px;
+            width: auto;
+            object-fit: contain;
+            mix-blend-mode: screen;
+            filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.3));
+        }
+
+        .brand-name {
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        .brand-name span { 
+            color: var(--gold-primary); 
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--gold-primary);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--gold-primary);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 170px 0 80px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            color: var(--gold-primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(180deg, #ffffff 30%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+
+        /* Seções */
+        .section {
+            padding: 80px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+
+        /* Projetos em Construção */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 32px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            border-color: var(--gold-primary);
+            transform: translateY(-5px);
+            background: var(--bg-card-hover);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(245, 158, 11, 0.15);
+        }
+
+        .project-img-wrapper {
+            width: 100%;
+            height: 230px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover .project-img {
+            transform: scale(1.06);
+        }
+
+        .status-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(7, 11, 18, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-light);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-family: var(--font-mono);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Projetos Futuros Grid */
+        .future-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .future-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius);
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .future-card:hover {
+            border-color: var(--gold-primary);
+            background: var(--bg-card);
+            transform: translateY(-3px);
+        }
+
+        .future-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--gold-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .future-card h4 {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            font-family: 'Chakra Petch', sans-serif;
+        }
+
+        .future-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* Seção Patrocinadores */
+        .sponsors-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sponsor-card {
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: 18px;
+            padding: 30px 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            max-width: 420px;
+            width: 100%;
+        }
+
+        .sponsor-card:hover {
+            border-color: var(--gold-primary);
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(245, 158, 11, 0.25);
+        }
+
+        .sponsor-logo {
+            max-width: 100%;
+            height: auto;
+            max-height: 100px;
+            object-fit: contain;
+        }
+
+        /* Rodapé Estilo HackerFab */
+        footer {
+            border-top: 1px solid var(--border-color);
+            background: #03060c;
+            padding: 70px 0 25px;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1.2fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-col .brand-desc {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-top: 14px;
+            max-width: 320px;
+            line-height: 1.6;
+        }
+
+        /* Botões de Redes Sociais com SVGs */
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid var(--border-color);
+            color: var(--gold-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background: var(--gold-primary);
+            color: var(--bg-primary);
+            border-color: var(--gold-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px var(--gold-glow);
+        }
+
+        .social-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 30px;
+            height: 2px;
+            background: var(--gold-primary);
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold-light);
+            transform: translateX(4px);
+        }
+
+        .footer-links .bullet {
+            color: var(--gold-primary);
+            font-size: 0.8rem;
+        }
+
+        .footer-contact-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-contact-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+
+        .footer-contact-list i {
+            color: var(--gold-primary);
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .footer-contact-list a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-contact-list a:hover {
+            color: var(--gold-light);
+        }
+
+        .footer-bottom {
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-bottom a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--gold-primary);
+        }
+
+        @media (max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.2rem; }
+            .mobile-toggle { display: flex; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: rgba(7, 11, 18, 0.98);
+                border-bottom: 1px solid var(--border-color);
+                flex-direction: column;
+                padding: 24px;
+                gap: 20px;
+                text-align: center;
+            }
+            .nav-links.active { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo-text">
+                    <img src="logo.png" alt="HackerFab Logo" class="logo-img">
+                    <span class="brand-name">HACKERFAB<span>@POLI</span></span>
+                </a>
+
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menu">
+                    <i data-lucide="menu"></i>
+                </button>
+
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#projetos">Projetos</a></li>
+                    <li><a href="#patrocinadores">Patrocinadores</a></li>
+                    <li><a href="equipe.html">Nossa Equipe</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="badge">
+                <i data-lucide="cpu" size="16"></i> Microeletrônica Aberta • Poli USP
+            </div>
+            <h1 class="hero-title">HACKERFAB POLI USP</h1>
+            <p class="hero-subtitle">
+                Desenvolvendo equipamentos de nanofabricação, ferramentas open source e processos de microeletrônica de baixo custo.
+            </p>
+        </div>
+    </section>
+
+    <!-- Seção: Projetos em Construção -->
+    <section class="section" id="projetos">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Projetos em Construção</h2>
+                <p style="color: var(--text-muted);">Ferramentas essenciais em fase ativa de desenvolvimento e montagem.</p>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Litógrafo -->
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <span class="status-tag">Em Construção</span>
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Litógrafo" class="project-img">
+                    </div>
+                    <h3 class="card-title">Litógrafo (Lithography Stepper)</h3>
+                    <p class="card-desc">
+                        Sistema óptico de projeção e alinhamento de máscaras para fotolitografia. Responsável por gravar os padrões dos circuitos integrados sobre a camada de fotorresiste nos wafers de silício.
+                    </p>
+                </div>
+
+                <!-- Spinner -->
+                <div class="project-card">
+                    <div class="project-img-wrapper">
+                        <span class="status-tag">Em Construção</span>
+                        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80" alt="Spinner" class="project-img">
+                    </div>
+                    <h3 class="card-title">Spinner (Spin Coater)</h3>
+                    <p class="card-desc">
+                        Equipamento de centrifugação e deposição de fotorresiste de alta precisão. Utiliza vácuo e controle de rotação programável para garantir espessuras micrométricas uniformes sobre o substrato.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção: Projetos Futuros -->
+    <section class="section" id="futuros">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Projetos Futuros</h2>
+                <p style="color: var(--text-muted);">Próximos equipamentos do ecossistema de fabricação (Hacker Fab Toolkit).</p>
+            </div>
+
+            <div class="future-grid">
+                <div class="future-card">
+                    <div class="future-icon"><i data-lucide="zap"></i></div>
+                    <h4>Câmara de Sputtering RF/DC</h4>
+                    <p>Deposição física em fase de vapor (PVD) auxiliada por plasma para criação de filmes finos metálicos e dielétricos.</p>
+                </div>
+
+                <div class="future-card">
+                    <div class="future-icon"><i data-lucide="flame"></i></div>
+                    <h4>Evaporador Térmico</h4>
+                    <p>Sistema de deposição a vácuo por aquecimento resistivo para formação de contatos e trilhas metálicas.</p>
+                </div>
+
+                <div class="future-card">
+                    <div class="future-icon"><i data-lucide="layers"></i></div>
+                    <h4>Deposição ALD (DIY)</h4>
+                    <p>Atomic Layer Deposition para crescimento sequencial e ultra-controlado de camadas de óxido com escala atômica.</p>
+                </div>
+
+                <div class="future-card">
+                    <div class="future-icon"><i data-lucide="thermometer"></i></div>
+                    <h4>Forno Tubular de Alta Temp.</h4>
+                    <p>Forno de quartzo para oxidação térmica de wafers de silício e tratamento térmico (*annealing*).</p>
+                </div>
+
+                <div class="future-card">
+                    <div class="future-icon"><i data-lucide="sparkles"></i></div>
+                    <h4>Gravador de Plasma (Dry Etch)</h4>
+                    <p>Decapagem anisotrópica por íons reativos em fase gasosa para definição precisa das estruturas do chip.</p>
+                </div>
+
+                <div class="future-card">
+                    <div class="future-icon"><i data-lucide="move-3d"></i></div>
+                    <h4>Nanoposicionador Piezo 3-Eixos</h4>
+                    <p>Atuadores piezoelétricos para movimentação e alinhamento de amostras com resolução sub-micrométrica.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção: Patrocinadores -->
+    <section class="section" id="patrocinadores">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Patrocinadores & Apoio</h2>
+                <p style="color: var(--text-muted);">Organizações que impulsionam o desenvolvimento do HackerFab @ POLI USP.</p>
+            </div>
+
+            <div class="sponsors-container">
+                <a href="https://amigosdapoli.com.br/" target="_blank" rel="noopener noreferrer" class="sponsor-card" title="Visitar site oficial da Amigos da Poli">
+                    <img src="https://static.wixstatic.com/media/70b856_aeb27a999985470faaabcd7361647682~mv2.png" alt="Amigos da Poli" class="sponsor-logo">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé Estilo HackerFab -->
+    <footer id="contato">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo-text">
+                        <img src="logo.png" alt="HackerFab Logo" class="logo-img">
+                        <span class="brand-name">HACKERFAB<span>@POLI</span></span>
+                    </a>
+                    <p class="brand-desc">
+                        Laboratório de microfabricação e desenvolvimento de semicondutores gerido por estudantes da Escola Politécnica da USP.
+                    </p>
+
+                    <!-- Botões de Redes Sociais com SVGs diretos -->
+                    <div class="social-links">
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/hackerfab_poli" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Instagram" title="Instagram">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+
+                        <!-- LinkedIn -->
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn" title="LinkedIn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+
+                        <!-- GitHub -->
+                        <a href="https://github.com/hacker-fab" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub" title="GitHub">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                        </a>
+
+                        <!-- Discord -->
+                        <a href="https://discord.gg/yFaW3Zs4aP" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Discord" title="Discord">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">Links Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#projetos"><span class="bullet">▪</span> Projetos em Construção</a></li>
+                        <li><a href="#futuros"><span class="bullet">▪</span> Projetos Futuros</a></li>
+                        <li><a href="#patrocinadores"><span class="bullet">▪</span> Patrocinadores</a></li>
+                        <li><a href="equipe.html"><span class="bullet">▪</span> Nossa Equipe</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title">Informações de Contato</h4>
+                    <ul class="footer-contact-list">
+                        <li>
+                            <i data-lucide="map-pin" size="20"></i>
+                            <span>
+                               LSI - Laboratório de Sistemas Integráveis<br>
+                               Av. Prof. Luciano Gualberto, Travessa 3, nº 158<br>
+                               Cidade Universitária, Butantã, São Paulo - SP
+                            </span>
+                        </li>
+                        <li>
+                            <i data-lucide="mail" size="18"></i>
+                            <a href="mailto:hackerfab.poli@usp.br">hackerfabpoli@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 HackerFab @ POLI USP. Todos os direitos reservados.</p>
+                <a href="https://www.poli.usp.br" target="_blank" rel="noopener noreferrer">
+                    Escola Politécnica da USP | poli.usp.br
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        if (mobileToggle && navLinks) {
+            mobileToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
