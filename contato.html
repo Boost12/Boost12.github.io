@@ -1,24 +1,30 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nossa Equipe | HackerFab @ POLI USP</title><meta name="description" content="Membros e lideranças da HackerFab@POLI, organizados por núcleos de desenvolvimento.">
+<title>Contato | HackerFab @ POLI USP</title><meta name="description" content="Canais de contato e endereço da HackerFab@POLI.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="icon" type="image/png" href="logo-mark.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Chakra+Petch:wght@600;700&display=swap"><link rel="stylesheet" href="style.css"></head>
 <body>
 <header class="topbar"><div class="wrap">
   <a class="brand" href="index.html" aria-label="HackerFab@POLI, página inicial"><img src="logo-mark.png" alt="" width="54" height="46"><span>HackerFab<b>@POLI</b></span></a>
-  <nav class="nav" aria-label="Principal"><a href="index.html#projetos">Projetos</a><a href="patrocinadores.html">Patrocinadores</a><a href="equipe.html" aria-current="page">Nossa Equipe</a><a href="contato.html">Contato</a></nav>
+  <nav class="nav" aria-label="Principal"><a href="index.html#projetos">Projetos</a><a href="patrocinadores.html">Patrocinadores</a><a href="equipe.html">Nossa Equipe</a><a href="contato.html" aria-current="page">Contato</a></nav>
 </div></header>
 <main>
-<section class="page-head"><div class="wrap"><h1>Nossa equipe</h1>
-<p class="lead">Membros e lideranças da Escola Politécnica da USP organizados por núcleos de desenvolvimento.</p></div></section>
+<section class="page-head"><div class="wrap"><h1>Fale com a equipe</h1>
+<p class="lead">Estudantes, pesquisadores e empresas são bem-vindos. Escolha o canal mais conveniente.</p></div></section>
 <section class="block last"><div class="wrap"><div class="rl">
-  <div class="rl-row team"><h3>Presidência</h3><ul class="people one"><li><b>Alberto Lederman Grinspun</b><span>Presidente</span></li></ul></div>
-  <div class="rl-row team"><h3>Núcleo de Gestão e Comunicação</h3><ul class="people"><li><b>Nícolas</b><span>Gestor de Núcleo &amp; Finanças</span></li><li><b>Arthur</b><span>ESG</span></li><li><b>Relações Públicas</b><span>Relações Públicas</span></li></ul></div>
-  <div class="rl-row team"><h3>Núcleo de Hardware e Fabricação</h3><ul class="people"><li><b>Alberto</b><span>Gestor de Núcleo</span></li><li><b>Silvio</b><span>Hardware</span></li><li><b>Alexandre Kei</b><span>Processos</span></li><li><b>Emerson</b><span>Impressão 3D</span></li><li><b>Sávio</b><span>Fabricação</span></li></ul></div>
-  <div class="rl-row team"><h3>Núcleo de Software e Automação</h3><ul class="people"><li><b>João Gusson</b><span>Gestor de Núcleo &amp; Software</span></li><li><b>Hudson</b><span>Automação</span></li></ul></div>
+  <div class="rl-row"><h3>E-mail</h3><p class="val" id="mail">hackerfabpoli@gmail.com</p><div class="acts"><button class="btn sm" id="copy" type="button">Copiar endereço</button><a class="btn sm" href="mailto:hackerfabpoli@gmail.com">Abrir e-mail</a></div></div>
+  <div class="rl-row"><h3>Comunidade</h3><p>Converse com a equipe e acompanhe o dia a dia do laboratório.</p><div class="acts"><a class="btn sm" href="https://discord.gg/yFaW3Zs4aP" target="_blank" rel="noopener">Entrar no Discord</a><a class="btn sm" href="https://www.instagram.com/hackerfab_poli" target="_blank" rel="noopener">Instagram</a></div></div>
+  <div class="rl-row"><h3>Código aberto</h3><p>Projetos e documentação das ferramentas.</p><div class="acts"><a class="btn sm" href="https://github.com/hacker-fab" target="_blank" rel="noopener">GitHub</a><a class="btn sm" href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></div></div>
+  <div class="rl-row"><h3>Onde estamos</h3><address>LSI - Laboratório de Sistemas Integráveis<br>Av. Prof. Luciano Gualberto, Travessa 3, nº 158<br>Cidade Universitária, Butantã, São Paulo - SP</address><span></span></div>
 </div></div></section>
-<section class="cta-band" style="margin-top:0"><div class="wrap"><h2>Quer entrar para a equipe?</h2><a class="btn primary" href="contato.html">Fale com a gente</a></div></section></main>
+<script>
+(function(){var b=document.getElementById('copy'),m=document.getElementById('mail');if(!b)return;
+b.addEventListener('click',function(){var t=m.textContent;
+function ok(){b.textContent='Endereço copiado';setTimeout(function(){b.textContent='Copiar endereço'},2000)}
+function sel(){var r=document.createRange();r.selectNodeContents(m);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selecionado, use Ctrl+C'}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,sel)}else{sel()}})})();
+</script></main>
 <footer class="foot-site"><div class="wrap">
   <div class="cols">
     <div><a class="brand" href="index.html" aria-label="HackerFab@POLI, página inicial"><img src="logo-mark.png" alt="" width="54" height="46"><span>HackerFab<b>@POLI</b></span></a>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spinner | HackerFab @ POLI USP</title><meta name="description" content="Equipamento de centrifugação e deposição de fotorresiste. Usa vácuo e rotação programável para obter espessuras micrométricas uniformes sobre o substrato.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="image/png" href="logo-mark.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Chakra+Petch:wght@600;700&display=swap"><link rel="stylesheet" href="style.css"></head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="index.html" aria-label="HackerFab@POLI, página inicial"><img src="logo-mark.png" alt="" width="54" height="46"><span>HackerFab<b>@POLI</b></span></a>
+  <nav class="nav" aria-label="Principal"><a href="index.html#projetos" aria-current="page">Projetos</a><a href="patrocinadores.html">Patrocinadores</a><a href="equipe.html">Nossa Equipe</a><a href="contato.html">Contato</a></nav>
+</div></header>
+<main>
+<div class="wrap crumbs"><a href="index.html">Início</a> / <a href="index.html#projetos">Projetos em construção</a> / Spinner</div>
+<section class="proj-head"><div class="wrap">
+  <div class="text"><span class="chip build">Em construção</span><h1>Spinner</h1><span class="en">Spin Coater</span><p class="lead">Equipamento de centrifugação e deposição de fotorresiste. Usa vácuo e rotação programável para obter espessuras micrométricas uniformes sobre o substrato.</p></div>
+  <figure class="sheet-fig"><svg class="sch" viewBox="0 0 480 300" role="img" aria-label="Esquema do spinner: dispensador de fotorresiste, wafer sobre chuck a vácuo e motor" xmlns="http://www.w3.org/2000/svg">
+    <rect class="fl" x="232" y="36" width="16" height="52" rx="2"/><polygon class="fl" points="232,88 248,88 240,102"/><text x="260" y="62" text-anchor="start">Dispensador de resiste</text>
+    <circle class="rsf" cx="240" cy="122" r="5"/><line class="rs dash" x1="240" y1="132" x2="240" y2="168"/>
+    <rect class="rsf" x="140" y="172" width="200" height="4"/><rect class="fl" x="140" y="176" width="200" height="8"/><text x="140" y="165" text-anchor="start">Wafer</text>
+    <rect class="fl" x="196" y="184" width="88" height="30" rx="2"/><text class="b" x="240" y="203" text-anchor="middle">Chuck</text>
+    <rect class="fl" x="228" y="214" width="24" height="34"/>
+    <rect class="bg" x="190" y="248" width="100" height="36" rx="3"/><text class="b" x="240" y="270" text-anchor="middle">Motor</text>
+    <path class="mu dash" d="M252 228 H350 V262"/><text x="350" y="278" text-anchor="middle">Vácuo</text>
+    <path class="am" d="M118 176 C108 150 134 132 168 134"/><line class="am" x1="160" y1="133" x2="168.1" y2="134"/><polygon class="amf" points="176,135 168.6,130 167.6,138"/>
+    <path class="am" d="M362 176 C372 150 346 132 312 134"/><line class="am" x1="320" y1="133" x2="311.9" y2="134"/><polygon class="amf" points="304,135 312.4,138 311.4,130"/>
+    <text x="104" y="200" text-anchor="end">Rotação</text></svg><figcaption>Esquema simplificado do spinner.</figcaption></figure>
+</div></section>
+<div class="wrap proj-body">
+  <div class="prose"><h2>Papel no processo</h2><p>Cobertura: espalha o fotorresiste em uma camada fina e uniforme.</p>
+    <h2>Como funciona</h2><p>O wafer fica preso por vácuo em um chuck. Uma pequena quantidade de fotorresiste é dispensada no centro e o motor gira o conjunto. A força centrífuga espalha o líquido até a borda e o solvente evapora, deixando um filme fino.</p><p>A espessura final depende da viscosidade do resiste e da velocidade de rotação. Por isso o spinner precisa de controle programável de rampa e rotação, com repetibilidade de um wafer para outro.</p>
+    <h2>Subsistemas</h2><ul><li>Chuck de vácuo e sistema de fixação</li><li>Motor com controle de rotação e rampa</li><li>Dispensador de fotorresiste</li><li>Cuba de contenção e dreno</li><li>Interface de programação de receitas</li></ul></div>
+  <aside class="sheet" aria-label="Ficha técnica"><h2>Ficha técnica</h2><dl><div class="row"><dt>Etapa</dt><dd>Cobertura com fotorresiste</dd></div><div class="row"><dt>Princípio</dt><dd>Centrifugação com fixação a vácuo</dd></div><div class="row"><dt>Controle</dt><dd>Rotação e rampa programáveis</dd></div><div class="row"><dt>Resultado</dt><dd>Filme de espessura micrométrica uniforme</dd></div><div class="row"><dt>Próxima etapa</dt><dd>Exposição no litógrafo</dd></div></dl>
+    <div class="foot">Os parâmetros finais serão publicados conforme o projeto avança.</div></aside>
+</div>
+
+<section class="wrap step-sec" aria-labelledby="giro-t"><div class="step-grid">
+  <div class="text"><h2 id="giro-t">Quanto mais rápido, mais fino</h2>
+    <p>O resiste cai no centro do wafer e o motor acelera. A força centrífuga empurra o líquido para a borda, o solvente evapora e sobra um filme fino e uniforme.</p>
+    <p>Em geral, a espessura cai com a raiz quadrada da velocidade: quadruplicar a rotação reduz o filme à metade. Mude a velocidade e veja o efeito.</p>
+    <div class="spin-ctl" id="spin-ctl" hidden>
+      <label for="rpm">Velocidade de rotação <output id="rpm-out" for="rpm">3000 rpm</output></label>
+      <input id="rpm" type="range" min="1000" max="6000" step="500" value="3000">
+      <p id="th-line">Espessura do filme: <b id="th-out">58%</b> do valor a 1000 rpm</p>
+      <button class="btn sm" id="spin-replay" type="button" hidden>Girar de novo</button>
+    </div></div>
+  <figure class="sheet-fig"><svg class="sch spinner-svg" id="spin" viewBox="0 0 400 444" role="img" aria-label="Wafer girando em um spinner. Vista de cima: o resiste sai do centro e se espalha até a borda. Vista lateral: o filme de resiste fica mais fino com a rotação" xmlns="http://www.w3.org/2000/svg">
+<defs><clipPath id="sp-w"><path d="M-59.9 104 A120 120 0 1 1 59.9 104 Z"/></clipPath><clipPath id="sp-rc"><circle id="sp-rclip" r="126"/></clipPath></defs>
+<text id="sp-phase" class="phase" x="16" y="26">Filme pronto</text><text id="sp-rpm" class="rpm" x="384" y="27" text-anchor="end">0 rpm</text>
+<g transform="translate(200 160)"><g id="sp-rot">
+<path class="wafer" d="M-59.9 104 A120 120 0 1 1 59.9 104 Z"/>
+<g clip-path="url(#sp-w)"><circle id="sp-resist" class="resist" r="126" style="fill:color-mix(in srgb, var(--pn-resist) 67.1%, white)"/><g id="sp-arms" clip-path="url(#sp-rc)" style="opacity:0"><path class="arm" d="M6 -0.4L13.8 -2.1L21.4 -5L28.5 -9.3L35 -14.8L40.7 -21.4L45.5 -29L49.3 -37.6L51.9 -46.9L53.3 -57L53.3 -67.5L51.8 -78.4L48.9 -89.5L44.4 -100.6L38.4 -111.6L30.9 -122.2"/><path class="arm" d="M3.3 5L8.7 11L15.1 16L22.3 20.1L30.3 22.9L38.9 24.6L47.9 24.9L57.2 23.9L66.6 21.5L76 17.6L85.1 12.4L93.8 5.7L102 -2.4L109.4 -11.8L115.8 -22.5L121.2 -34.3"/><path class="arm" d="M-2.7 5.4L-5.1 13L-6.3 21.1L-6.2 29.3L-4.7 37.7L-1.9 46L2.3 53.9L7.9 61.5L14.7 68.4L22.7 74.6L31.9 79.9L42 84.1L53.1 87.1L64.9 88.8L77.4 89.1L90.3 87.8"/><path class="arm" d="M-6 0.4L-13.8 2.1L-21.4 5L-28.5 9.3L-35 14.8L-40.7 21.4L-45.5 29L-49.3 37.6L-51.9 46.9L-53.3 57L-53.3 67.5L-51.8 78.4L-48.9 89.5L-44.4 100.6L-38.4 111.6L-30.9 122.2"/><path class="arm" d="M-3.3 -5L-8.7 -11L-15.1 -16L-22.3 -20.1L-30.3 -22.9L-38.9 -24.6L-47.9 -24.9L-57.2 -23.9L-66.6 -21.5L-76 -17.6L-85.1 -12.4L-93.8 -5.7L-102 2.4L-109.4 11.8L-115.8 22.5L-121.2 34.3"/><path class="arm" d="M2.7 -5.4L5.1 -13L6.3 -21.1L6.2 -29.3L4.7 -37.7L1.9 -46L-2.3 -53.9L-7.9 -61.5L-14.7 -68.4L-22.7 -74.6L-31.9 -79.9L-42 -84.1L-53.1 -87.1L-64.9 -88.8L-77.4 -89.1L-90.3 -87.8"/></g><circle id="sp-front" class="front" r="126"/></g>
+<path class="rimline" d="M-59.9 104 A120 120 0 1 1 59.9 104 Z"/></g></g>
+<text x="16" y="302">Vista lateral, espessura exagerada</text>
+<rect class="fl" x="192" y="314" width="16" height="30" rx="2"/><polygon class="fl" points="192,344 208,344 200,356"/><text x="216" y="334" text-anchor="start">Dispensador</text>
+<circle id="sp-drop" class="rsf" cx="200" cy="358" r="4.5" hidden/>
+<rect class="slab" x="80" y="392" width="240" height="12"/><path id="sp-film" class="rsf" d="M80.0 392L80.0 392.00L85.0 390.96L90.0 390.16L95.0 389.55L100.0 389.09L105.0 388.75L110.0 388.50L115.0 388.32L120.0 388.20L125.0 388.11L130.0 388.05L135.0 388.01L140.0 387.99L145.0 387.98L150.0 387.97L155.0 387.96L160.0 387.96L165.0 387.96L170.0 387.96L175.0 387.96L180.0 387.96L185.0 387.96L190.0 387.96L195.0 387.96L200.0 387.96L205.0 387.96L210.0 387.96L215.0 387.96L220.0 387.96L225.0 387.96L230.0 387.96L235.0 387.96L240.0 387.96L245.0 387.96L250.0 387.97L255.0 387.98L260.0 387.99L265.0 388.01L270.0 388.05L275.0 388.11L280.0 388.20L285.0 388.32L290.0 388.50L295.0 388.75L300.0 389.09L305.0 389.55L310.0 390.16L315.0 390.96L320.0 392.00L320.0 392Z"/><text x="74" y="402" text-anchor="end">Wafer</text>
+<rect class="fl" x="168" y="404" width="64" height="16" rx="2"/><text x="240" y="416" text-anchor="start">Chuck a vácuo</text>
+<rect class="bg" x="192" y="420" width="16" height="18"/>
+</svg><figcaption>Em cima, o wafer visto de cima; embaixo, o corte lateral do filme. A espessura está exagerada e os valores reais dependem do resiste e da receita.</figcaption></figure>
+</div></section><script>
+(function(){
+function filmPath(cx, base, r, H, p) {
+  r = Math.min(r, 120);
+  if (r < 1 || H < 0.2) return '';
+  var n = 48, d = 'M' + (cx - r).toFixed(1) + ' ' + base;
+  for (var i = 0; i <= n; i++) {
+    var u = 2 * i / n - 1, h = H * (1 - Math.pow(Math.abs(u), p));
+    d += 'L' + (cx + u * r).toFixed(1) + ' ' + (base - h).toFixed(2);
+  }
+  return d + 'L' + (cx + r).toFixed(1) + ' ' + base + 'Z';
+}
+var svg=document.getElementById('spin');
+if(!svg)return;
+var $=function(i){return document.getElementById(i)};
+var rot=$('sp-rot'),rclip=$('sp-rclip'),res=$('sp-resist'),arms=$('sp-arms'),front=$('sp-front'),film=$('sp-film'),drop=$('sp-drop'),
+    ph=$('sp-phase'),rp=$('sp-rpm'),ctl=$('spin-ctl'),sl=$('rpm'),out=$('rpm-out'),th=$('th-out'),btn=$('spin-replay');
+var CX=200,BASE=392,RF=126,H0=14,R0=14,raf=0,ang=0,running=false;
+var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+function hf(v){return 7*Math.sqrt(1000/v)}
+function vis(v){return 0.35+1.15*(v-1000)/5000}
+function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
+function state(t,v){
+  var tD=0.7,tS=3*Math.sqrt(1000/v),tH=2.6,tE=1,f=hf(v),hs=f+6,q,e;
+  var s={r:0,H:0,p:2,rpm:0,k:0,drop:null,front:false,phase:'Dispensa',done:false};
+  if(t<tD){s.drop=358+30*Math.pow(t/tD,2);return s}
+  if(t<tD+tS){q=(t-tD)/tS;e=1-Math.pow(1-q,2.2);
+    s.r=R0+(RF-R0)*e;s.H=H0+(hs-H0)*e;s.p=2+5*e;s.rpm=v*q;s.front=true;s.phase='Espalha'}
+  else if(t<tD+tS+tH){q=(t-tD-tS)/tH;
+    s.r=RF;s.H=f+(hs-f)*Math.exp(-3*q);s.p=7;s.rpm=v;s.phase='Afina'}
+  else if(t<tD+tS+tH+tE){q=(t-tD-tS-tH)/tE;
+    s.r=RF;s.H=f;s.p=7;s.rpm=v*(1-q);s.phase='Para'}
+  else{s.r=RF;s.H=f;s.p=7;s.rpm=0;s.phase='Filme pronto';s.done=true}
+  s.k=s.rpm/v;
+  return s;
+}
+function draw(s){
+  var r=s.r.toFixed(1);
+  rclip.setAttribute('r',r);res.setAttribute('r',r);front.setAttribute('r',r);
+  res.style.fill='color-mix(in srgb, var(--pn-resist) '+(62+38*clamp((s.H-2.5)/11.5,0,1)).toFixed(1)+'%, white)';
+  arms.style.opacity=s.k.toFixed(2);front.style.opacity=s.front?1:0;
+  film.setAttribute('d',filmPath(CX,BASE,s.r,s.H,s.p));
+  if(s.drop===null)drop.setAttribute('hidden','');else{drop.removeAttribute('hidden');drop.setAttribute('cy',s.drop.toFixed(1))}
+  ph.textContent=s.phase;rp.textContent=(Math.round(s.rpm/10)*10)+' rpm';
+}
+function rest(v){draw({r:RF,H:hf(v),p:7,rpm:0,k:0,drop:null,front:false,phase:'Filme pronto'})}
+function label(){var v=+sl.value;out.textContent=v+' rpm';th.textContent=Math.round(100*Math.sqrt(1000/v))+'%'}
+function play(){
+  cancelAnimationFrame(raf);btn.hidden=true;running=true;
+  var v=+sl.value,t0=null,last=0;ang=0;
+  function step(ts){
+    if(t0===null){t0=ts;last=ts}
+    var t=(ts-t0)/1000,dt=(ts-last)/1000,s=state(t,v);last=ts;
+    ang+=vis(v)*(s.rpm/v)*360*dt;
+    rot.setAttribute('transform','rotate('+ang.toFixed(1)+')');
+    draw(s);
+    if(s.done){running=false;btn.hidden=false;return}
+    raf=requestAnimationFrame(step);
+  }
+  raf=requestAnimationFrame(step);
+}
+ctl.hidden=false;label();
+sl.addEventListener('input',function(){label();if(!running)rest(+sl.value)});
+btn.addEventListener('click',play);
+if(!reduce){
+  sl.addEventListener('change',play);
+  if('IntersectionObserver'in window){
+    var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){io.disconnect();play()}},{threshold:0.5});
+    io.observe(svg);
+  }else{btn.hidden=false}
+}
+})();
+</script>
+<section class="wrap" style="padding-bottom:16px"><div class="sec-head" style="margin-bottom:20px"><h2 style="font-size:1.6rem;font-stretch:112%">Onde entra no processo</h2></div><ol class="flow"><li><svg class="xs" viewBox="0 0 160 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><rect class="si" x="4" y="68" width="152" height="24"/><rect class="ox" x="4" y="56" width="152" height="12"/></svg><p class="t">1. Oxidação</p><p class="d">Cresce uma camada de óxido sobre o silício.</p>
+    <div class="tools"><a href="projeto-forno.html">Forno tubular</a></div></li><li aria-current="step"><svg class="xs" viewBox="0 0 160 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><rect class="si" x="4" y="68" width="152" height="24"/><rect class="ox" x="4" y="56" width="152" height="12"/><rect class="rs" x="4" y="42" width="152" height="14"/></svg><p class="t">2. Cobertura</p><p class="d">Espalha o fotorresiste em filme fino.</p>
+    <div class="tools"><a href="projeto-spinner.html">Spinner</a></div></li><li><svg class="xs" viewBox="0 0 160 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><rect class="si" x="4" y="68" width="152" height="24"/><rect class="ox" x="4" y="56" width="152" height="12"/><rect class="rs" x="4" y="42" width="42" height="14"/><rect class="rs" x="62" y="42" width="36" height="14"/><rect class="rs" x="114" y="42" width="42" height="14"/><rect class="rx" x="46" y="42" width="16" height="14"/><rect class="rx" x="98" y="42" width="16" height="14"/><rect class="mod" x="4" y="6" width="152" height="8"/><rect class="pxon" x="50" y="6" width="8" height="8"/><rect class="pxon" x="102" y="6" width="8" height="8"/><line class="uv" x1="54" y1="16" x2="54" y2="31"/><polygon class="uvf" points="54,38 50,30 58,30"/><line class="uv" x1="106" y1="16" x2="106" y2="31"/><polygon class="uvf" points="106,38 102,30 110,30"/></svg><p class="t">3. Exposição</p><p class="d">Projeta o padrão do layout no resiste.</p>
+    <div class="tools"><a href="projeto-litografo.html">Litógrafo</a><a href="projeto-nanoposicionador.html">Nanoposicionador</a></div></li><li><svg class="xs" viewBox="0 0 160 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><rect class="si" x="4" y="68" width="152" height="24"/><rect class="ox" x="4" y="56" width="42" height="12"/><rect class="ox" x="62" y="56" width="36" height="12"/><rect class="ox" x="114" y="56" width="42" height="12"/><rect class="rs" x="4" y="42" width="42" height="14"/><rect class="rs" x="62" y="42" width="36" height="14"/><rect class="rs" x="114" y="42" width="42" height="14"/></svg><p class="t">4. Gravação</p><p class="d">Remove o material onde o resiste abriu.</p>
+    <div class="tools"><a href="projeto-plasma.html">Gravador de plasma</a></div></li><li><svg class="xs" viewBox="0 0 160 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><rect class="si" x="4" y="68" width="152" height="24"/><rect class="ox" x="4" y="56" width="42" height="12"/><rect class="ox" x="62" y="56" width="36" height="12"/><rect class="ox" x="114" y="56" width="42" height="12"/><rect class="rs" x="4" y="42" width="42" height="14"/><rect class="rs" x="62" y="42" width="36" height="14"/><rect class="rs" x="114" y="42" width="42" height="14"/><rect class="mt" x="4" y="34" width="42" height="8"/><rect class="mt" x="62" y="34" width="36" height="8"/><rect class="mt" x="114" y="34" width="42" height="8"/><rect class="mt" x="46" y="60" width="16" height="8"/><rect class="mt" x="98" y="60" width="16" height="8"/></svg><p class="t">5. Deposição</p><p class="d">Forma os filmes e os contatos metálicos.</p>
+    <div class="tools"><a href="projeto-sputtering.html">Sputtering</a><a href="projeto-evaporador.html">Evaporador térmico</a><a href="projeto-ald.html">ALD</a></div></li></ol>
+<div class="legend"><span><i style="background:var(--pn-si)"></i>Silício</span><span><i style="background:var(--pn-ox)"></i>Óxido</span><span><i style="background:var(--pn-resist)"></i>Fotorresiste</span><span><i style="background:var(--pn-silver)"></i>Metal</span></div></section>
+<div class="wrap" style="padding-top:40px"><nav class="pager" aria-label="Outros projetos">
+  <a href="projeto-litografo.html"><span class="lbl">Projeto anterior</span><span class="nm">Litógrafo</span></a>
+  <a href="projeto-sputtering.html"><span class="lbl">Próximo projeto</span><span class="nm">Câmara de Sputtering RF/DC</span></a>
+</nav></div>
+<section class="cta-band"><div class="wrap"><h2>Quer ajudar neste projeto?</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn primary" href="contato.html">Entrar em contato</a><a class="btn" href="equipe.html">Ver a equipe</a></div></div></section></main>
+<footer class="foot-site"><div class="wrap">
+  <div class="cols">
+    <div><a class="brand" href="index.html" aria-label="HackerFab@POLI, página inicial"><img src="logo-mark.png" alt="" width="54" height="46"><span>HackerFab<b>@POLI</b></span></a>
+      <p class="about">Laboratório de microfabricação e desenvolvimento de semicondutores gerido por estudantes da Escola Politécnica da USP.</p>
+      <div class="social"><a href="https://www.instagram.com/hackerfab_poli" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a><a href="https://github.com/hacker-fab" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></a><a href="https://discord.gg/yFaW3Zs4aP" target="_blank" rel="noopener noreferrer" aria-label="Discord" title="Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></a></div></div>
+    <div><h4>Links rápidos</h4><ul>
+      <li><a href="index.html#projetos">Projetos em construção</a></li>
+      <li><a href="index.html#futuros">Projetos futuros</a></li>
+      <li><a href="patrocinadores.html">Patrocinadores</a></li>
+      <li><a href="equipe.html">Nossa Equipe</a></li>
+      <li><a href="contato.html">Contato</a></li></ul></div>
+    <div><h4>Informações de contato</h4><address>
+      <span>LSI - Laboratório de Sistemas Integráveis<br>Av. Prof. Luciano Gualberto, Travessa 3, nº 158<br>Cidade Universitária, Butantã, São Paulo - SP</span>
+      <a href="mailto:hackerfabpoli@gmail.com">hackerfabpoli@gmail.com</a></address></div>
+  </div>
+  <div class="legal"><span>© 2026 HackerFab @ POLI USP. Todos os direitos reservados.</span><a href="https://www.poli.usp.br" target="_blank" rel="noopener noreferrer">Escola Politécnica da USP | poli.usp.br</a></div>
+</div></footer>
+</body></html>

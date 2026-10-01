@@ -1,775 +1,147 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HackerFab @ POLI USP | Microeletrônica Aberta</title>
-
-    <!-- Fontes do Google: Chakra Petch + Inter + JetBrains Mono -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-
-    <!-- Lucide Icons (para ícones gerais) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <style>
-        :root {
-            --bg-primary: #070b12;
-            --bg-card: rgba(15, 23, 42, 0.8);
-            --bg-card-hover: rgba(26, 38, 61, 0.95);
-            --gold-primary: #f59e0b;
-            --gold-light: #fbbf24;
-            --gold-glow: rgba(245, 158, 11, 0.25);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: rgba(245, 158, 11, 0.2);
-            --border-bright: rgba(245, 158, 11, 0.6);
-            --radius: 12px;
-            --font-mono: 'JetBrains Mono', monospace;
-        }
-
-        .hero-title, .logo-text, .section-title, .card-title, .badge, .footer-title {
-            font-family: 'Chakra Petch', sans-serif !important;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(30, 58, 138, 0.15) 0%, transparent 50%);
-            background-attachment: fixed;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* Header e Navbar */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 9999;
-            background: rgba(7, 11, 18, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 80px;
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-main);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-img {
-            height: 56px;
-            width: auto;
-            object-fit: contain;
-            mix-blend-mode: screen;
-            filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.3));
-        }
-
-        .brand-name {
-            display: inline-flex;
-            align-items: center;
-            white-space: nowrap;
-        }
-
-        .brand-name span { 
-            color: var(--gold-primary); 
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--gold-primary);
-        }
-
-        .mobile-toggle {
-            display: none;
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid var(--border-color);
-            color: var(--gold-primary);
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        /* Hero */
-        .hero {
-            padding: 170px 0 80px;
-            text-align: center;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 16px;
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid var(--border-color);
-            border-radius: 50px;
-            color: var(--gold-primary);
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-        }
-
-        .hero-title {
-            font-size: 3.2rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            background: linear-gradient(180deg, #ffffff 30%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-subtitle {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto 32px;
-        }
-
-        /* Seções */
-        .section {
-            padding: 80px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            color: var(--text-main);
-            margin-bottom: 12px;
-        }
-
-        /* Projetos em Construção */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 32px;
-        }
-
-        .project-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 24px;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .project-card:hover {
-            border-color: var(--gold-primary);
-            transform: translateY(-5px);
-            background: var(--bg-card-hover);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(245, 158, 11, 0.15);
-        }
-
-        .project-img-wrapper {
-            width: 100%;
-            height: 230px;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
-            position: relative;
-        }
-
-        .project-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .project-card:hover .project-img {
-            transform: scale(1.06);
-        }
-
-        .status-tag {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(7, 11, 18, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--gold-primary);
-            color: var(--gold-light);
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-family: var(--font-mono);
-        }
-
-        .card-title {
-            font-size: 1.4rem;
-            color: var(--text-main);
-            margin-bottom: 10px;
-        }
-
-        .card-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* Projetos Futuros Grid */
-        .future-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .future-card {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: var(--radius);
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .future-card:hover {
-            border-color: var(--gold-primary);
-            background: var(--bg-card);
-            transform: translateY(-3px);
-        }
-
-        .future-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 8px;
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--gold-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-        }
-
-        .future-card h4 {
-            font-size: 1.1rem;
-            color: var(--text-main);
-            margin-bottom: 8px;
-            font-family: 'Chakra Petch', sans-serif;
-        }
-
-        .future-card p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-        }
-
-        /* Seção Patrocinadores */
-        .sponsors-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .sponsor-card {
-            background: #ffffff;
-            border: 2px solid var(--border-color);
-            border-radius: 18px;
-            padding: 30px 48px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            max-width: 420px;
-            width: 100%;
-        }
-
-        .sponsor-card:hover {
-            border-color: var(--gold-primary);
-            transform: translateY(-6px) scale(1.02);
-            box-shadow: 0 12px 35px rgba(245, 158, 11, 0.25);
-        }
-
-        .sponsor-logo {
-            max-width: 100%;
-            height: auto;
-            max-height: 100px;
-            object-fit: contain;
-        }
-
-        /* Rodapé Estilo HackerFab */
-        footer {
-            border-top: 1px solid var(--border-color);
-            background: #03060c;
-            padding: 70px 0 25px;
-            margin-top: 60px;
-            position: relative;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.4fr 1fr 1.2fr;
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-
-        .footer-col .brand-desc {
-            color: var(--text-muted);
-            font-size: 0.92rem;
-            margin-top: 14px;
-            max-width: 320px;
-            line-height: 1.6;
-        }
-
-        /* Botões de Redes Sociais com SVGs */
-        .social-links {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .social-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: rgba(245, 158, 11, 0.08);
-            border: 1px solid var(--border-color);
-            color: var(--gold-primary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .social-btn:hover {
-            background: var(--gold-primary);
-            color: var(--bg-primary);
-            border-color: var(--gold-primary);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px var(--gold-glow);
-        }
-
-        .social-btn svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .footer-title {
-            font-size: 1.2rem;
-            color: var(--text-main);
-            margin-bottom: 20px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .footer-title::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -6px;
-            width: 30px;
-            height: 2px;
-            background: var(--gold-primary);
-        }
-
-        .footer-links {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .footer-links a:hover {
-            color: var(--gold-light);
-            transform: translateX(4px);
-        }
-
-        .footer-links .bullet {
-            color: var(--gold-primary);
-            font-size: 0.8rem;
-        }
-
-        .footer-contact-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .footer-contact-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            color: var(--text-muted);
-            font-size: 0.92rem;
-        }
-
-        .footer-contact-list i {
-            color: var(--gold-primary);
-            margin-top: 3px;
-            flex-shrink: 0;
-        }
-
-        .footer-contact-list a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-contact-list a:hover {
-            color: var(--gold-light);
-        }
-
-        .footer-bottom {
-            padding-top: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .footer-bottom a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-bottom a:hover {
-            color: var(--gold-primary);
-        }
-
-        @media (max-width: 900px) {
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 36px;
-            }
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-title { font-size: 2.2rem; }
-            .mobile-toggle { display: flex; }
-            .projects-grid { grid-template-columns: 1fr; }
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 80px;
-                left: 0;
-                right: 0;
-                background: rgba(7, 11, 18, 0.98);
-                border-bottom: 1px solid var(--border-color);
-                flex-direction: column;
-                padding: 24px;
-                gap: 20px;
-                text-align: center;
-            }
-            .nav-links.active { display: flex; }
-        }
-    </style>
-</head>
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HackerFab @ POLI USP | Microeletrônica Aberta</title><meta name="description" content="Microeletrônica aberta na Escola Politécnica da USP: equipamentos de nanofabricação, ferramentas open source e processos de baixo custo.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="image/png" href="logo-mark.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Chakra+Petch:wght@600;700&display=swap"><link rel="stylesheet" href="style.css"></head>
 <body>
-
-    <!-- Header / Navbar -->
-    <header>
-        <div class="container">
-            <nav>
-                <a href="index.html" class="logo-text">
-                    <img src="logo.png" alt="HackerFab Logo" class="logo-img">
-                    <span class="brand-name">HACKERFAB<span>@POLI</span></span>
-                </a>
-
-                <button class="mobile-toggle" id="mobileToggle" aria-label="Abrir menu">
-                    <i data-lucide="menu"></i>
-                </button>
-
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#projetos">Projetos</a></li>
-                    <li><a href="#patrocinadores">Patrocinadores</a></li>
-                    <li><a href="equipe.html">Nossa Equipe</a></li>
-                    <li><a href="#contato">Contato</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero -->
-    <section class="hero">
-        <div class="container">
-            <div class="badge">
-                <i data-lucide="cpu" size="16"></i> Microeletrônica Aberta • Poli USP
-            </div>
-            <h1 class="hero-title">HACKERFAB POLI USP</h1>
-            <p class="hero-subtitle">
-                Desenvolvendo equipamentos de nanofabricação, ferramentas open source e processos de microeletrônica de baixo custo.
-            </p>
-        </div>
-    </section>
-
-    <!-- Seção: Projetos em Construção -->
-    <section class="section" id="projetos">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Projetos em Construção</h2>
-                <p style="color: var(--text-muted);">Ferramentas essenciais em fase ativa de desenvolvimento e montagem.</p>
-            </div>
-
-            <div class="projects-grid">
-                <!-- Litógrafo -->
-                <div class="project-card">
-                    <div class="project-img-wrapper">
-                        <span class="status-tag">Em Construção</span>
-                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Litógrafo" class="project-img">
-                    </div>
-                    <h3 class="card-title">Litógrafo (Lithography Stepper)</h3>
-                    <p class="card-desc">
-                        Sistema óptico de projeção e alinhamento de máscaras para fotolitografia. Responsável por gravar os padrões dos circuitos integrados sobre a camada de fotorresiste nos wafers de silício.
-                    </p>
-                </div>
-
-                <!-- Spinner -->
-                <div class="project-card">
-                    <div class="project-img-wrapper">
-                        <span class="status-tag">Em Construção</span>
-                        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80" alt="Spinner" class="project-img">
-                    </div>
-                    <h3 class="card-title">Spinner (Spin Coater)</h3>
-                    <p class="card-desc">
-                        Equipamento de centrifugação e deposição de fotorresiste de alta precisão. Utiliza vácuo e controle de rotação programável para garantir espessuras micrométricas uniformes sobre o substrato.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção: Projetos Futuros -->
-    <section class="section" id="futuros">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Projetos Futuros</h2>
-                <p style="color: var(--text-muted);">Próximos equipamentos do ecossistema de fabricação (Hacker Fab Toolkit).</p>
-            </div>
-
-            <div class="future-grid">
-                <div class="future-card">
-                    <div class="future-icon"><i data-lucide="zap"></i></div>
-                    <h4>Câmara de Sputtering RF/DC</h4>
-                    <p>Deposição física em fase de vapor (PVD) auxiliada por plasma para criação de filmes finos metálicos e dielétricos.</p>
-                </div>
-
-                <div class="future-card">
-                    <div class="future-icon"><i data-lucide="flame"></i></div>
-                    <h4>Evaporador Térmico</h4>
-                    <p>Sistema de deposição a vácuo por aquecimento resistivo para formação de contatos e trilhas metálicas.</p>
-                </div>
-
-                <div class="future-card">
-                    <div class="future-icon"><i data-lucide="layers"></i></div>
-                    <h4>Deposição ALD (DIY)</h4>
-                    <p>Atomic Layer Deposition para crescimento sequencial e ultra-controlado de camadas de óxido com escala atômica.</p>
-                </div>
-
-                <div class="future-card">
-                    <div class="future-icon"><i data-lucide="thermometer"></i></div>
-                    <h4>Forno Tubular de Alta Temp.</h4>
-                    <p>Forno de quartzo para oxidação térmica de wafers de silício e tratamento térmico (*annealing*).</p>
-                </div>
-
-                <div class="future-card">
-                    <div class="future-icon"><i data-lucide="sparkles"></i></div>
-                    <h4>Gravador de Plasma (Dry Etch)</h4>
-                    <p>Decapagem anisotrópica por íons reativos em fase gasosa para definição precisa das estruturas do chip.</p>
-                </div>
-
-                <div class="future-card">
-                    <div class="future-icon"><i data-lucide="move-3d"></i></div>
-                    <h4>Nanoposicionador Piezo 3-Eixos</h4>
-                    <p>Atuadores piezoelétricos para movimentação e alinhamento de amostras com resolução sub-micrométrica.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção: Patrocinadores -->
-    <section class="section" id="patrocinadores">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Patrocinadores & Apoio</h2>
-                <p style="color: var(--text-muted);">Organizações que impulsionam o desenvolvimento do HackerFab @ POLI USP.</p>
-            </div>
-
-            <div class="sponsors-container">
-                <a href="https://amigosdapoli.com.br/" target="_blank" rel="noopener noreferrer" class="sponsor-card" title="Visitar site oficial da Amigos da Poli">
-                    <img src="https://static.wixstatic.com/media/70b856_aeb27a999985470faaabcd7361647682~mv2.png" alt="Amigos da Poli" class="sponsor-logo">
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Rodapé Estilo HackerFab -->
-    <footer id="contato">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <a href="index.html" class="logo-text">
-                        <img src="logo.png" alt="HackerFab Logo" class="logo-img">
-                        <span class="brand-name">HACKERFAB<span>@POLI</span></span>
-                    </a>
-                    <p class="brand-desc">
-                        Laboratório de microfabricação e desenvolvimento de semicondutores gerido por estudantes da Escola Politécnica da USP.
-                    </p>
-
-                    <!-- Botões de Redes Sociais com SVGs diretos -->
-                    <div class="social-links">
-                        <!-- Instagram -->
-                        <a href="https://www.instagram.com/hackerfab_poli" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Instagram" title="Instagram">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                            </svg>
-                        </a>
-
-                        <!-- LinkedIn -->
-                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn" title="LinkedIn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                <rect x="2" y="9" width="4" height="12"></rect>
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
-                        </a>
-
-                        <!-- GitHub -->
-                        <a href="https://github.com/hacker-fab" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="GitHub" title="GitHub">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                            </svg>
-                        </a>
-
-                        <!-- Discord -->
-                        <a href="https://discord.gg/yFaW3Zs4aP" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Discord" title="Discord">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-col">
-                    <h4 class="footer-title">Links Rápidos</h4>
-                    <ul class="footer-links">
-                        <li><a href="#projetos"><span class="bullet">▪</span> Projetos em Construção</a></li>
-                        <li><a href="#futuros"><span class="bullet">▪</span> Projetos Futuros</a></li>
-                        <li><a href="#patrocinadores"><span class="bullet">▪</span> Patrocinadores</a></li>
-                        <li><a href="equipe.html"><span class="bullet">▪</span> Nossa Equipe</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4 class="footer-title">Informações de Contato</h4>
-                    <ul class="footer-contact-list">
-                        <li>
-                            <i data-lucide="map-pin" size="20"></i>
-                            <span>
-                               LSI - Laboratório de Sistemas Integráveis<br>
-                               Av. Prof. Luciano Gualberto, Travessa 3, nº 158<br>
-                               Cidade Universitária, Butantã, São Paulo - SP
-                            </span>
-                        </li>
-                        <li>
-                            <i data-lucide="mail" size="18"></i>
-                            <a href="mailto:hackerfab.poli@usp.br">hackerfabpoli@gmail.com</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>© 2026 HackerFab @ POLI USP. Todos os direitos reservados.</p>
-                <a href="https://www.poli.usp.br" target="_blank" rel="noopener noreferrer">
-                    Escola Politécnica da USP | poli.usp.br
-                </a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        lucide.createIcons();
-
-        const mobileToggle = document.getElementById('mobileToggle');
-        const navLinks = document.getElementById('navLinks');
-
-        if (mobileToggle && navLinks) {
-            mobileToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-
-            navLinks.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                });
-            });
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="index.html" aria-label="HackerFab@POLI, página inicial"><img src="logo-mark.png" alt="" width="54" height="46"><span>HackerFab<b>@POLI</b></span></a>
+  <nav class="nav" aria-label="Principal"><a href="index.html#projetos">Projetos</a><a href="patrocinadores.html">Patrocinadores</a><a href="equipe.html">Nossa Equipe</a><a href="contato.html">Contato</a></nav>
+</div></header>
+<main>
+<section class="hero"><div class="wrap">
+  <div><h1>HackerFab<br>Poli USP</h1>
+    <p class="lead">Desenvolvendo equipamentos de nanofabricação, ferramentas open source e processos de microeletrônica de baixo custo.</p>
+    <div class="cta"><a class="btn primary" href="#projetos">Ver projetos</a><a class="btn" href="contato.html">Falar com a equipe</a></div></div>
+  <figure class="hero-art"><svg class="hero-ill" viewBox="0 0 600 540" role="img" aria-label="Ilustração de um litógrafo: um wafer de silício sob a lente, em que os campos de exposição acendem para escrever, letra por letra, HACKERFAB@POLI" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern id="hi-dots" width="30" height="30" patternUnits="userSpaceOnUse"><circle class="hi-dot" cx="2" cy="2" r="1.4"/></pattern>
+<linearGradient id="hi-sheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".5" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<linearGradient id="hi-beam" x1="0" y1="0" x2="0" y2="1"><stop class="hi-bm" offset="0" stop-opacity=".18"/><stop class="hi-bm" offset="1" stop-opacity=".9"/></linearGradient>
+<radialGradient id="hi-halo"><stop class="hi-bm" offset="0" stop-opacity=".7"/><stop class="hi-bm" offset="1" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="600" height="540" fill="url(#hi-dots)"/><path class="hi-mark" d="M22 40V22H40"/><path class="hi-mark" d="M578 40V22H560"/><path class="hi-mark" d="M22 500V518H40"/><path class="hi-mark" d="M578 500V518H560"/>
+<g class="hi-move"><ellipse class="hi-shadow" cx="308" cy="397" rx="225" ry="129.1"/><path class="hi-chuck" d="M97 367A203 116.4 0 0 0 503 367V387A203 116.4 0 0 1 97 387Z"/><ellipse class="hi-chuck-top" cx="300" cy="367" rx="203" ry="116.4"/><path class="hi-wside" d="M108 358A192 110.1 0 0 0 237.6 462.1L362.4 462.1A192 110.1 0 0 0 492 358L492 367A192 110.1 0 0 1 362.4 471.1L237.6 471.1A192 110.1 0 0 1 108 367Z"/><path class="hi-wafer" d="M237.6 462.1A192 110.1 0 1 1 362.4 462.1Z"/><path d="M237.6 462.1A192 110.1 0 1 1 362.4 462.1Z" fill="url(#hi-sheen)"/><g class="hi-grid"><rect class="hi-die" x="266.5" y="259.6" width="21.1" height="12.1"/><rect class="hi-die" x="289.5" y="259.6" width="21.1" height="12.1"/><rect class="hi-die" x="312.5" y="259.6" width="21.1" height="12.1"/><rect class="hi-die" x="220.5" y="272.8" width="21.1" height="12.1"/><rect class="hi-die" x="243.5" y="272.8" width="21.1" height="12.1"/><rect class="hi-die" x="266.5" y="272.8" width="21.1" height="12.1"/><rect class="hi-die" x="289.5" y="272.8" width="21.1" height="12.1"/><rect class="hi-die" x="312.5" y="272.8" width="21.1" height="12.1"/><rect class="hi-die" x="335.5" y="272.8" width="21.1" height="12.1"/><rect class="hi-die" x="358.5" y="272.8" width="21.1" height="12.1"/><rect class="hi-die" x="174.5" y="286" width="21.1" height="12.1"/><rect class="hi-die" x="197.5" y="286" width="21.1" height="12.1"/><rect class="hi-die" x="220.5" y="286" width="21.1" height="12.1"/><rect class="hi-die" x="243.5" y="286" width="21.1" height="12.1"/><rect class="hi-die" x="266.5" y="286" width="21.1" height="12.1"/><rect class="hi-die" x="289.5" y="286" width="21.1" height="12.1"/><rect class="hi-die" x="312.5" y="286" width="21.1" height="12.1"/><rect class="hi-die" x="335.5" y="286" width="21.1" height="12.1"/><rect class="hi-die" x="358.5" y="286" width="21.1" height="12.1"/><rect class="hi-die" x="381.5" y="286" width="21.1" height="12.1"/><rect class="hi-die" x="404.5" y="286" width="21.1" height="12.1"/><rect class="hi-die" x="174.5" y="299.2" width="21.1" height="12.1"/><rect class="hi-die" x="197.5" y="299.2" width="21.1" height="12.1"/><rect class="hi-die" x="220.5" y="299.2" width="21.1" height="12.1"/><rect class="hi-die" x="243.5" y="299.2" width="21.1" height="12.1"/><rect class="hi-die" x="266.5" y="299.2" width="21.1" height="12.1"/><rect class="hi-die" x="289.5" y="299.2" width="21.1" height="12.1"/><rect class="hi-die" x="312.5" y="299.2" width="21.1" height="12.1"/><rect class="hi-die" x="335.5" y="299.2" width="21.1" height="12.1"/><rect class="hi-die" x="358.5" y="299.2" width="21.1" height="12.1"/><rect class="hi-die" x="381.5" y="299.2" width="21.1" height="12.1"/><rect class="hi-die" x="404.5" y="299.2" width="21.1" height="12.1"/><rect class="hi-die" x="151.5" y="312.4" width="21.1" height="12.1"/><rect class="hi-die" x="174.5" y="312.4" width="21.1" height="12.1"/><rect class="hi-die" x="197.5" y="312.4" width="21.1" height="12.1"/><rect class="hi-die" x="220.5" y="312.4" width="21.1" height="12.1"/><rect class="hi-die" x="358.5" y="312.4" width="21.1" height="12.1"/><rect class="hi-die" x="381.5" y="312.4" width="21.1" height="12.1"/><rect class="hi-die" x="404.5" y="312.4" width="21.1" height="12.1"/><rect class="hi-die" x="427.5" y="312.4" width="21.1" height="12.1"/><rect class="hi-die" x="151.5" y="325.6" width="21.1" height="12.1"/><rect class="hi-die" x="174.5" y="325.6" width="21.1" height="12.1"/><rect class="hi-die" x="197.5" y="325.6" width="21.1" height="12.1"/><rect class="hi-die" x="220.5" y="325.6" width="21.1" height="12.1"/><rect class="hi-die" x="358.5" y="325.6" width="21.1" height="12.1"/><rect class="hi-die" x="381.5" y="325.6" width="21.1" height="12.1"/><rect class="hi-die" x="404.5" y="325.6" width="21.1" height="12.1"/><rect class="hi-die" x="427.5" y="325.6" width="21.1" height="12.1"/><rect class="hi-die" x="128.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="151.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="174.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="197.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="220.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="358.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="381.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="404.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="427.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="450.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="128.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die" x="151.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die" x="174.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die" x="197.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die" x="220.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die" x="358.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die" x="381.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die" x="404.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die" x="427.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die" x="450.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die" x="128.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="151.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="174.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="197.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="220.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="358.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="381.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="404.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="427.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="450.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="151.5" y="378.3" width="21.1" height="12.1"/><rect class="hi-die" x="174.5" y="378.3" width="21.1" height="12.1"/><rect class="hi-die" x="197.5" y="378.3" width="21.1" height="12.1"/><rect class="hi-die" x="220.5" y="378.3" width="21.1" height="12.1"/><rect class="hi-die" x="358.5" y="378.3" width="21.1" height="12.1"/><rect class="hi-die" x="381.5" y="378.3" width="21.1" height="12.1"/><rect class="hi-die" x="404.5" y="378.3" width="21.1" height="12.1"/><rect class="hi-die" x="427.5" y="378.3" width="21.1" height="12.1"/><rect class="hi-die" x="151.5" y="391.5" width="21.1" height="12.1"/><rect class="hi-die" x="174.5" y="391.5" width="21.1" height="12.1"/><rect class="hi-die" x="197.5" y="391.5" width="21.1" height="12.1"/><rect class="hi-die" x="220.5" y="391.5" width="21.1" height="12.1"/><rect class="hi-die" x="358.5" y="391.5" width="21.1" height="12.1"/><rect class="hi-die" x="381.5" y="391.5" width="21.1" height="12.1"/><rect class="hi-die" x="404.5" y="391.5" width="21.1" height="12.1"/><rect class="hi-die" x="427.5" y="391.5" width="21.1" height="12.1"/><rect class="hi-die" x="174.5" y="404.7" width="21.1" height="12.1"/><rect class="hi-die" x="197.5" y="404.7" width="21.1" height="12.1"/><rect class="hi-die" x="220.5" y="404.7" width="21.1" height="12.1"/><rect class="hi-die" x="243.5" y="404.7" width="21.1" height="12.1"/><rect class="hi-die" x="266.5" y="404.7" width="21.1" height="12.1"/><rect class="hi-die" x="289.5" y="404.7" width="21.1" height="12.1"/><rect class="hi-die" x="312.5" y="404.7" width="21.1" height="12.1"/><rect class="hi-die" x="335.5" y="404.7" width="21.1" height="12.1"/><rect class="hi-die" x="358.5" y="404.7" width="21.1" height="12.1"/><rect class="hi-die" x="381.5" y="404.7" width="21.1" height="12.1"/><rect class="hi-die" x="404.5" y="404.7" width="21.1" height="12.1"/><rect class="hi-die" x="174.5" y="417.9" width="21.1" height="12.1"/><rect class="hi-die" x="197.5" y="417.9" width="21.1" height="12.1"/><rect class="hi-die" x="220.5" y="417.9" width="21.1" height="12.1"/><rect class="hi-die" x="243.5" y="417.9" width="21.1" height="12.1"/><rect class="hi-die" x="266.5" y="417.9" width="21.1" height="12.1"/><rect class="hi-die" x="289.5" y="417.9" width="21.1" height="12.1"/><rect class="hi-die" x="312.5" y="417.9" width="21.1" height="12.1"/><rect class="hi-die" x="335.5" y="417.9" width="21.1" height="12.1"/><rect class="hi-die" x="358.5" y="417.9" width="21.1" height="12.1"/><rect class="hi-die" x="381.5" y="417.9" width="21.1" height="12.1"/><rect class="hi-die" x="404.5" y="417.9" width="21.1" height="12.1"/><rect class="hi-die" x="220.5" y="431.1" width="21.1" height="12.1"/><rect class="hi-die" x="243.5" y="431.1" width="21.1" height="12.1"/><rect class="hi-die" x="266.5" y="431.1" width="21.1" height="12.1"/><rect class="hi-die" x="289.5" y="431.1" width="21.1" height="12.1"/><rect class="hi-die" x="312.5" y="431.1" width="21.1" height="12.1"/><rect class="hi-die" x="335.5" y="431.1" width="21.1" height="12.1"/><rect class="hi-die" x="358.5" y="431.1" width="21.1" height="12.1"/><rect class="hi-die" x="266.5" y="444.3" width="21.1" height="12.1"/><rect class="hi-die" x="289.5" y="444.3" width="21.1" height="12.1"/><rect class="hi-die" x="312.5" y="444.3" width="21.1" height="12.1"/></g><g class="hi-lit"><rect class="hi-die on" x="243.5" y="312.4" width="21.1" height="12.1"/><rect class="hi-die on" x="266.5" y="312.4" width="21.1" height="12.1"/><rect class="hi-die on" x="289.5" y="312.4" width="21.1" height="12.1"/><rect class="hi-die on" x="312.5" y="312.4" width="21.1" height="12.1"/><rect class="hi-die on" x="335.5" y="312.4" width="21.1" height="12.1"/><rect class="hi-die on" x="243.5" y="325.6" width="21.1" height="12.1"/><rect class="hi-die" x="266.5" y="325.6" width="21.1" height="12.1"/><rect class="hi-die" x="289.5" y="325.6" width="21.1" height="12.1"/><rect class="hi-die" x="312.5" y="325.6" width="21.1" height="12.1"/><rect class="hi-die" x="335.5" y="325.6" width="21.1" height="12.1"/><rect class="hi-die on" x="243.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="266.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="289.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="312.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die" x="335.5" y="338.8" width="21.1" height="12.1"/><rect class="hi-die on" x="243.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die on" x="266.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die on" x="289.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die on" x="312.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die" x="335.5" y="351.9" width="21.1" height="12.1"/><rect class="hi-die on" x="243.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="266.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="289.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="312.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die" x="335.5" y="365.1" width="21.1" height="12.1"/><rect class="hi-die on" x="243.5" y="378.3" width="21.1" height="12.1"/><rect class="hi-die" x="266.5" y="378.3" width="21.1" height="12.1"/><rect class="hi-die" x="289.5" y="378.3" width="21.1" height="12.1"/><rect class="hi-die" x="312.5" y="378.3" width="21.1" height="12.1"/><rect class="hi-die" x="335.5" y="378.3" width="21.1" height="12.1"/><rect class="hi-die on" x="243.5" y="391.5" width="21.1" height="12.1"/><rect class="hi-die" x="266.5" y="391.5" width="21.1" height="12.1"/><rect class="hi-die" x="289.5" y="391.5" width="21.1" height="12.1"/><rect class="hi-die" x="312.5" y="391.5" width="21.1" height="12.1"/><rect class="hi-die" x="335.5" y="391.5" width="21.1" height="12.1"/></g></g>
+<g class="hi-beamg"><ellipse class="hi-halo" cx="346" cy="324.5" rx="40" ry="22.9" fill="url(#hi-halo)"/><rect class="hi-glowdie" x="335.5" y="312.4" width="21.1" height="12.1"/><path d="M324 270.9H368L356.6 324.5H335.5Z" fill="url(#hi-beam)"/></g><rect class="hi-m1 hi-ln" x="380" y="154.6" width="232" height="14.7"/><rect class="hi-m2 hi-ln" x="380" y="138.5" width="232" height="16.1"/><path class="hi-m1 hi-ln" d="M318 254.5L324 270.9A22 12.6 0 0 0 368 270.9L374 254.5Z"/><path class="hi-m1 hi-ln" d="M318 189V254.5A28 16.1 0 0 0 374 254.5V189Z"/><path class="hi-m3 hi-ln" d="M318 230.8A28 16.1 0 0 0 374 230.8L374 239.8A28 16.1 0 0 1 318 239.8Z"/><path class="hi-groove" d="M318 220.1A28 16.1 0 0 0 374 220.1"/><path class="hi-groove" d="M318 212.8A28 16.1 0 0 0 374 212.8"/><path class="hi-groove" d="M318 205.4A28 16.1 0 0 0 374 205.4"/><rect class="hi-m1 hi-ln" x="308" y="174.8" width="76" height="36"/><rect class="hi-m2 hi-ln" x="308" y="131.2" width="76" height="43.6"/><rect class="hi-m3 hi-ln" x="327" y="184.6" width="38" height="18"/><path class="hi-m1 hi-ln" d="M327 126.7V153A19 10.9 0 0 0 365 153V126.7"/><ellipse class="hi-m2 hi-ln" cx="346" cy="126.7" rx="19" ry="10.9"/><path class="hi-m1 hi-ln" d="M313 87.4V126.7A33 18.9 0 0 0 379 126.7V87.4"/><ellipse class="hi-m2 hi-ln" cx="346" cy="87.4" rx="33" ry="18.9"/><path class="hi-led hi-ln" d="M313 119.4A33 18.9 0 0 0 379 119.4L379 126.7A33 18.9 0 0 1 313 126.7Z"/><path class="hi-groove" d="M313 111.2A33 18.9 0 0 0 379 111.2"/><path class="hi-groove" d="M313 103.8A33 18.9 0 0 0 379 103.8"/><path class="hi-groove" d="M313 96.4A33 18.9 0 0 0 379 96.4"/><ellipse class="hi-m1 hi-ln" cx="346" cy="87.4" rx="23" ry="13.2"/>
+<text class="hi-cap" x="38" y="72">HACKERFAB@POLI</text>
+</svg></figure>
+</div></section><script>
+(function(){
+  var svg=document.querySelector('.hero-ill'); if(!svg) return;
+  var mv=svg.querySelector('.hi-move'), dies=svg.querySelectorAll('.hi-lit .hi-die'), halo=svg.querySelector('.hi-halo'), beam=svg.querySelector('.hi-beamg'), cap=svg.querySelector('.hi-cap');
+  var G=[{"ch":"H","seq":[[30,92,-79.2],[34,0,-79.2],[29,0,-66],[25,92,-66],[20,92,-52.8],[24,0,-52.8],[19,0,-39.6],[18,23,-39.6],[17,46,-39.6],[16,69,-39.6],[15,92,-39.6],[10,92,-26.4],[14,0,-26.4],[9,0,-13.2],[5,92,-13.2],[0,92,0],[4,0,0]]},{"ch":"A","seq":[[30,92,-79.2],[34,0,-79.2],[29,0,-66],[25,92,-66],[20,92,-52.8],[24,0,-52.8],[19,0,-39.6],[18,23,-39.6],[17,46,-39.6],[16,69,-39.6],[15,92,-39.6],[10,92,-26.4],[14,0,-26.4],[9,0,-13.2],[5,92,-13.2],[1,69,0],[2,46,0],[3,23,0]]},{"ch":"C","seq":[[31,69,-79.2],[32,46,-79.2],[33,23,-79.2],[29,0,-66],[25,92,-66],[20,92,-52.8],[15,92,-39.6],[10,92,-26.4],[9,0,-13.2],[5,92,-13.2],[1,69,0],[2,46,0],[3,23,0]]},{"ch":"K","seq":[[30,92,-79.2],[34,0,-79.2],[28,23,-66],[25,92,-66],[20,92,-52.8],[22,46,-52.8],[16,69,-39.6],[15,92,-39.6],[10,92,-26.4],[12,46,-26.4],[8,23,-13.2],[5,92,-13.2],[0,92,0],[4,0,0]]},{"ch":"E","seq":[[30,92,-79.2],[31,69,-79.2],[32,46,-79.2],[33,23,-79.2],[34,0,-79.2],[25,92,-66],[20,92,-52.8],[18,23,-39.6],[17,46,-39.6],[16,69,-39.6],[15,92,-39.6],[10,92,-26.4],[5,92,-13.2],[0,92,0],[1,69,0],[2,46,0],[3,23,0],[4,0,0]]},{"ch":"R","seq":[[30,92,-79.2],[34,0,-79.2],[28,23,-66],[25,92,-66],[20,92,-52.8],[22,46,-52.8],[18,23,-39.6],[17,46,-39.6],[16,69,-39.6],[15,92,-39.6],[10,92,-26.4],[14,0,-26.4],[9,0,-13.2],[5,92,-13.2],[0,92,0],[1,69,0],[2,46,0],[3,23,0]]},{"ch":"F","seq":[[30,92,-79.2],[25,92,-66],[20,92,-52.8],[18,23,-39.6],[17,46,-39.6],[16,69,-39.6],[15,92,-39.6],[10,92,-26.4],[5,92,-13.2],[0,92,0],[1,69,0],[2,46,0],[3,23,0],[4,0,0]]},{"ch":"A","seq":[[30,92,-79.2],[34,0,-79.2],[29,0,-66],[25,92,-66],[20,92,-52.8],[24,0,-52.8],[19,0,-39.6],[18,23,-39.6],[17,46,-39.6],[16,69,-39.6],[15,92,-39.6],[10,92,-26.4],[14,0,-26.4],[9,0,-13.2],[5,92,-13.2],[1,69,0],[2,46,0],[3,23,0]]},{"ch":"B","seq":[[30,92,-79.2],[31,69,-79.2],[32,46,-79.2],[33,23,-79.2],[29,0,-66],[25,92,-66],[20,92,-52.8],[24,0,-52.8],[18,23,-39.6],[17,46,-39.6],[16,69,-39.6],[15,92,-39.6],[10,92,-26.4],[14,0,-26.4],[9,0,-13.2],[5,92,-13.2],[0,92,0],[1,69,0],[2,46,0],[3,23,0]]},{"ch":"@","seq":[[31,69,-79.2],[32,46,-79.2],[33,23,-79.2],[25,92,-66],[20,92,-52.8],[22,46,-52.8],[23,23,-52.8],[24,0,-52.8],[19,0,-39.6],[17,46,-39.6],[15,92,-39.6],[10,92,-26.4],[12,46,-26.4],[13,23,-26.4],[14,0,-26.4],[9,0,-13.2],[5,92,-13.2],[1,69,0],[2,46,0],[3,23,0]]},{"ch":"P","seq":[[30,92,-79.2],[25,92,-66],[20,92,-52.8],[18,23,-39.6],[17,46,-39.6],[16,69,-39.6],[15,92,-39.6],[10,92,-26.4],[14,0,-26.4],[9,0,-13.2],[5,92,-13.2],[0,92,0],[1,69,0],[2,46,0],[3,23,0]]},{"ch":"O","seq":[[31,69,-79.2],[32,46,-79.2],[33,23,-79.2],[29,0,-66],[25,92,-66],[20,92,-52.8],[24,0,-52.8],[19,0,-39.6],[15,92,-39.6],[10,92,-26.4],[14,0,-26.4],[9,0,-13.2],[5,92,-13.2],[1,69,0],[2,46,0],[3,23,0]]},{"ch":"L","seq":[[30,92,-79.2],[31,69,-79.2],[32,46,-79.2],[33,23,-79.2],[34,0,-79.2],[25,92,-66],[20,92,-52.8],[15,92,-39.6],[10,92,-26.4],[5,92,-13.2],[0,92,0]]},{"ch":"I","seq":[[31,69,-79.2],[32,46,-79.2],[33,23,-79.2],[27,46,-66],[22,46,-52.8],[17,46,-39.6],[12,46,-26.4],[7,46,-13.2],[1,69,0],[2,46,0],[3,23,0]]}];
+  if(!mv||!halo||!beam||!cap||dies.length!==35) return;
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var STEP=135,MOVE=100,BACK=420,HOLD=1300,FADE=320,END=2400;
+  function wait(ms){return new Promise(function(r){setTimeout(r,ms)})}
+  function at(x,y){mv.style.transform='translate('+x+'px,'+y+'px)'}
+  function clear(){for(var i=0;i<dies.length;i++) dies[i].classList.remove('on')}
+  async function play(){
+    for(;;){
+      cap.textContent=' ';
+      for(var g=0;g<G.length;g++){
+        while(document.hidden) await wait(500);
+        clear(); beam.style.opacity=1;
+        mv.style.transition='transform '+MOVE+'ms cubic-bezier(.4,0,.2,1)';
+        var s=G[g].seq;
+        for(var k=0;k<s.length;k++){
+          at(s[k][1],s[k][2]); await wait(MOVE);
+          dies[s[k][0]].classList.add('on');
+          halo.classList.remove('flash'); void halo.getBoundingClientRect(); halo.classList.add('flash');
+          await wait(STEP-MOVE);
         }
-    </script>
-</body>
-</html>
+        beam.style.opacity=0;
+        mv.style.transition='transform '+BACK+'ms ease-in-out'; at(0,0);
+        await wait(BACK+HOLD);
+        cap.textContent=(g?cap.textContent:'')+G[g].ch;
+        clear(); await wait(FADE);
+      }
+      await wait(END);
+    }
+  }
+  clear(); beam.style.opacity=0; cap.textContent=' ';
+  mv.style.transition='none'; at(0,0);
+  setTimeout(play,350);
+})();
+</script>
+
+<section class="block"><div class="wrap">
+  <div class="sec-head"><h2>Como um wafer vira chip</h2><p>Cada ferramenta que construímos ocupa uma etapa deste ciclo simplificado. Escolha uma ferramenta para abrir a página do projeto.</p></div>
+  <ol class="flow"><li><svg class="xs" viewBox="0 0 160 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><rect class="si" x="4" y="68" width="152" height="24"/><rect class="ox" x="4" y="56" width="152" height="12"/></svg><p class="t">1. Oxidação</p><p class="d">Cresce uma camada de óxido sobre o silício.</p>
+    <div class="tools"><a href="projeto-forno.html">Forno tubular</a></div></li><li><svg class="xs" viewBox="0 0 160 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><rect class="si" x="4" y="68" width="152" height="24"/><rect class="ox" x="4" y="56" width="152" height="12"/><rect class="rs" x="4" y="42" width="152" height="14"/></svg><p class="t">2. Cobertura</p><p class="d">Espalha o fotorresiste em filme fino.</p>
+    <div class="tools"><a href="projeto-spinner.html">Spinner</a></div></li><li><svg class="xs" viewBox="0 0 160 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><rect class="si" x="4" y="68" width="152" height="24"/><rect class="ox" x="4" y="56" width="152" height="12"/><rect class="rs" x="4" y="42" width="42" height="14"/><rect class="rs" x="62" y="42" width="36" height="14"/><rect class="rs" x="114" y="42" width="42" height="14"/><rect class="rx" x="46" y="42" width="16" height="14"/><rect class="rx" x="98" y="42" width="16" height="14"/><rect class="mod" x="4" y="6" width="152" height="8"/><rect class="pxon" x="50" y="6" width="8" height="8"/><rect class="pxon" x="102" y="6" width="8" height="8"/><line class="uv" x1="54" y1="16" x2="54" y2="31"/><polygon class="uvf" points="54,38 50,30 58,30"/><line class="uv" x1="106" y1="16" x2="106" y2="31"/><polygon class="uvf" points="106,38 102,30 110,30"/></svg><p class="t">3. Exposição</p><p class="d">Projeta o padrão do layout no resiste.</p>
+    <div class="tools"><a href="projeto-litografo.html">Litógrafo</a><a href="projeto-nanoposicionador.html">Nanoposicionador</a></div></li><li><svg class="xs" viewBox="0 0 160 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><rect class="si" x="4" y="68" width="152" height="24"/><rect class="ox" x="4" y="56" width="42" height="12"/><rect class="ox" x="62" y="56" width="36" height="12"/><rect class="ox" x="114" y="56" width="42" height="12"/><rect class="rs" x="4" y="42" width="42" height="14"/><rect class="rs" x="62" y="42" width="36" height="14"/><rect class="rs" x="114" y="42" width="42" height="14"/></svg><p class="t">4. Gravação</p><p class="d">Remove o material onde o resiste abriu.</p>
+    <div class="tools"><a href="projeto-plasma.html">Gravador de plasma</a></div></li><li><svg class="xs" viewBox="0 0 160 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><rect class="si" x="4" y="68" width="152" height="24"/><rect class="ox" x="4" y="56" width="42" height="12"/><rect class="ox" x="62" y="56" width="36" height="12"/><rect class="ox" x="114" y="56" width="42" height="12"/><rect class="rs" x="4" y="42" width="42" height="14"/><rect class="rs" x="62" y="42" width="36" height="14"/><rect class="rs" x="114" y="42" width="42" height="14"/><rect class="mt" x="4" y="34" width="42" height="8"/><rect class="mt" x="62" y="34" width="36" height="8"/><rect class="mt" x="114" y="34" width="42" height="8"/><rect class="mt" x="46" y="60" width="16" height="8"/><rect class="mt" x="98" y="60" width="16" height="8"/></svg><p class="t">5. Deposição</p><p class="d">Forma os filmes e os contatos metálicos.</p>
+    <div class="tools"><a href="projeto-sputtering.html">Sputtering</a><a href="projeto-evaporador.html">Evaporador térmico</a><a href="projeto-ald.html">ALD</a></div></li></ol>
+<div class="legend"><span><i style="background:var(--pn-si)"></i>Silício</span><span><i style="background:var(--pn-ox)"></i>Óxido</span><span><i style="background:var(--pn-resist)"></i>Fotorresiste</span><span><i style="background:var(--pn-silver)"></i>Metal</span></div>
+</div></section>
+
+<section class="block" id="projetos"><div class="wrap">
+  <div class="sec-head"><h2>Projetos em Construção</h2><p>Ferramentas essenciais em fase ativa de desenvolvimento e montagem.</p></div>
+  <div class="rows"><article class="proj-row"><figure class="sheet-fig"><svg class="sch" viewBox="0 0 480 300" role="img" aria-label="Esquema do litógrafo sem máscara: fonte UV, modulador de luz com o layout digital, lente de projeção e wafer sobre stage XY" xmlns="http://www.w3.org/2000/svg">
+    <rect class="fl" x="196" y="10" width="100" height="26" rx="2"/><text class="b" x="246" y="27" text-anchor="middle">Fonte UV</text>
+    <line class="am" x1="212" y1="36" x2="212" y2="78"/><line class="am" x1="246" y1="36" x2="246" y2="74" opacity=".35"/><line class="am" x1="280" y1="36" x2="280" y2="78"/>
+    <rect class="bg" x="170" y="80" width="17" height="14"/><rect class="bg" x="187" y="80" width="17" height="14"/><rect class="amf" x="204" y="80" width="17" height="14"/><rect class="bg" x="221" y="80" width="17" height="14"/><rect class="bg" x="238" y="80" width="17" height="14"/><rect class="bg" x="255" y="80" width="17" height="14"/><rect class="amf" x="272" y="80" width="17" height="14"/><rect class="bg" x="289" y="80" width="17" height="14"/><rect class="bg" x="306" y="80" width="17" height="14"/><text class="b" x="332" y="91" text-anchor="start">Modulador de luz</text><text x="332" y="106" text-anchor="start">DMD ou display</text>
+    <rect class="fl" x="14" y="72" width="96" height="30" rx="2"/><text class="b" x="62" y="91" text-anchor="middle">Layout</text><text x="62" y="120" text-anchor="middle">Arquivo digital</text>
+    <line class="mu" x1="112" y1="87" x2="160" y2="87"/><polygon class="muf" points="168,87 160,83 160,91"/>
+    <line class="am" x1="212" y1="94" x2="230" y2="139"/><line class="am" x1="280" y1="94" x2="262" y2="139"/>
+    <ellipse class="bg" cx="246" cy="150" rx="56" ry="11"/><text x="316" y="154" text-anchor="start">Lente de projeção</text>
+    <line class="am" x1="230" y1="161" x2="240" y2="216"/><line class="am" x1="262" y1="161" x2="252" y2="216"/>
+    <rect class="rsf" x="166" y="219" width="160" height="3"/><rect class="fl" x="166" y="222" width="160" height="6"/><text x="338" y="227" text-anchor="start">Wafer com resiste</text>
+    <rect class="fl" x="146" y="228" width="200" height="26" rx="2"/><text class="b" x="246" y="245" text-anchor="middle">Stage XY</text>
+    <line class="mu" x1="142" y1="274" x2="110" y2="274"/><polygon class="muf" points="102,274 110,278 110,270"/><line class="mu" x1="350" y1="274" x2="382" y2="274"/><polygon class="muf" points="390,274 382,270 382,278"/><text x="246" y="278" text-anchor="middle">Passo e repetição</text></svg></figure>
+  <div class="text"><span class="chip build">Em construção</span><h3><a href="projeto-litografo.html">Litógrafo</a></h3><span class="en">Maskless Lithography Stepper</span><p class="sum">Stepper de fotolitografia sem máscara: um modulador de luz projeta o padrão do circuito, direto de um arquivo digital, sobre o fotorresiste dos wafers de silício.</p><span class="go">Ver o projeto</span></div></article><article class="proj-row"><figure class="sheet-fig"><svg class="sch" viewBox="0 0 480 300" role="img" aria-label="Esquema do spinner: dispensador de fotorresiste, wafer sobre chuck a vácuo e motor" xmlns="http://www.w3.org/2000/svg">
+    <rect class="fl" x="232" y="36" width="16" height="52" rx="2"/><polygon class="fl" points="232,88 248,88 240,102"/><text x="260" y="62" text-anchor="start">Dispensador de resiste</text>
+    <circle class="rsf" cx="240" cy="122" r="5"/><line class="rs dash" x1="240" y1="132" x2="240" y2="168"/>
+    <rect class="rsf" x="140" y="172" width="200" height="4"/><rect class="fl" x="140" y="176" width="200" height="8"/><text x="140" y="165" text-anchor="start">Wafer</text>
+    <rect class="fl" x="196" y="184" width="88" height="30" rx="2"/><text class="b" x="240" y="203" text-anchor="middle">Chuck</text>
+    <rect class="fl" x="228" y="214" width="24" height="34"/>
+    <rect class="bg" x="190" y="248" width="100" height="36" rx="3"/><text class="b" x="240" y="270" text-anchor="middle">Motor</text>
+    <path class="mu dash" d="M252 228 H350 V262"/><text x="350" y="278" text-anchor="middle">Vácuo</text>
+    <path class="am" d="M118 176 C108 150 134 132 168 134"/><line class="am" x1="160" y1="133" x2="168.1" y2="134"/><polygon class="amf" points="176,135 168.6,130 167.6,138"/>
+    <path class="am" d="M362 176 C372 150 346 132 312 134"/><line class="am" x1="320" y1="133" x2="311.9" y2="134"/><polygon class="amf" points="304,135 312.4,138 311.4,130"/>
+    <text x="104" y="200" text-anchor="end">Rotação</text></svg></figure>
+  <div class="text"><span class="chip build">Em construção</span><h3><a href="projeto-spinner.html">Spinner</a></h3><span class="en">Spin Coater</span><p class="sum">Equipamento de centrifugação e deposição de fotorresiste. Usa vácuo e rotação programável para obter espessuras micrométricas uniformes sobre o substrato.</p><span class="go">Ver o projeto</span></div></article></div>
+</div></section>
+
+<section class="block" id="futuros"><div class="wrap">
+  <div class="sec-head"><h2>Projetos Futuros</h2><p>Próximos equipamentos do ecossistema de fabricação (Hacker Fab Toolkit), na ordem do fluxo.</p></div>
+  <div class="idx-head idx-cols"><span>Etapa</span><span>Projeto</span><span>O que faz</span></div>
+  <ul class="idx" style="list-style:none;margin:0;padding:0"><li class="idx-row"><span class="step">Oxidação</span><div><h3><a href="projeto-forno.html">Forno Tubular de Alta Temp.</a></h3><span class="en">High-Temperature Tube Furnace</span></div><p>Forno de quartzo para oxidação térmica de wafers de silício e tratamento térmico (annealing).</p></li><li class="idx-row"><span class="step">Alinhamento</span><div><h3><a href="projeto-nanoposicionador.html">Nanoposicionador Piezo 3-Eixos</a></h3><span class="en">3-Axis Piezo Nanopositioner</span></div><p>Atuadores piezoelétricos para movimentar e alinhar amostras com resolução submicrométrica.</p></li><li class="idx-row"><span class="step">Gravação</span><div><h3><a href="projeto-plasma.html">Gravador de Plasma (Dry Etch)</a></h3><span class="en">Reactive Ion Etcher</span></div><p>Decapagem anisotrópica por íons reativos em fase gasosa para definir com precisão as estruturas do chip.</p></li><li class="idx-row"><span class="step">Deposição</span><div><h3><a href="projeto-sputtering.html">Câmara de Sputtering RF/DC</a></h3><span class="en">RF/DC Sputtering Chamber</span></div><p>Deposição física em fase de vapor (PVD) auxiliada por plasma para criar filmes finos metálicos e dielétricos.</p></li><li class="idx-row"><span class="step">Deposição</span><div><h3><a href="projeto-evaporador.html">Evaporador Térmico</a></h3><span class="en">Thermal Evaporator</span></div><p>Sistema de deposição a vácuo por aquecimento resistivo para formação de contatos e trilhas metálicas.</p></li><li class="idx-row"><span class="step">Deposição</span><div><h3><a href="projeto-ald.html">Deposição ALD (DIY)</a></h3><span class="en">Atomic Layer Deposition</span></div><p>Atomic Layer Deposition para o crescimento sequencial e ultracontrolado de camadas de óxido com escala atômica.</p></li></ul>
+</div></section>
+
+<section class="block" id="patrocinadores"><div class="wrap">
+  <div class="sec-head"><h2>Patrocinadores e Apoio</h2><p>Organizações que impulsionam o desenvolvimento do HackerFab @ POLI USP.</p></div>
+  <div class="rl"><div class="sponsor"><div class="info"><h3>Amigos da Poli</h3><p>Associação ligada à Escola Politécnica da USP.</p>
+  <div class="acts"><a class="btn sm" href="https://amigosdapoli.com.br/" target="_blank" rel="noopener noreferrer">Visitar site oficial</a><a class="btn sm primary" href="patrocinadores.html">Como apoiar</a></div></div>
+  <a class="plate" href="https://amigosdapoli.com.br/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true"><img src="amigos-da-poli.png" alt="Amigos da Poli" width="800" height="361" decoding="async"><span class="name" hidden>Amigos da Poli</span></a></div></div>
+</div></section><script>
+(function(){[].forEach.call(document.querySelectorAll('.plate img'),function(im){
+  function fail(){im.hidden=true;var n=im.parentNode.querySelector('.name');if(n)n.hidden=false}
+  if(im.complete&&im.naturalWidth===0)fail();else im.addEventListener('error',fail);
+})})();
+</script>
+
+<section class="block last" id="contato"><div class="wrap">
+  <div class="sec-head"><h2>Vamos construir juntos</h2><p>Estudantes, pesquisadores e empresas são bem-vindos. Escreva para a equipe ou entre no nosso Discord.</p></div>
+  <div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn primary" href="contato.html">Ver canais de contato</a><a class="btn" href="equipe.html">Conhecer a equipe</a></div>
+</div></section></main>
+<footer class="foot-site"><div class="wrap">
+  <div class="cols">
+    <div><a class="brand" href="index.html" aria-label="HackerFab@POLI, página inicial"><img src="logo-mark.png" alt="" width="54" height="46"><span>HackerFab<b>@POLI</b></span></a>
+      <p class="about">Laboratório de microfabricação e desenvolvimento de semicondutores gerido por estudantes da Escola Politécnica da USP.</p>
+      <div class="social"><a href="https://www.instagram.com/hackerfab_poli" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a><a href="https://github.com/hacker-fab" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></a><a href="https://discord.gg/yFaW3Zs4aP" target="_blank" rel="noopener noreferrer" aria-label="Discord" title="Discord"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></a></div></div>
+    <div><h4>Links rápidos</h4><ul>
+      <li><a href="index.html#projetos">Projetos em construção</a></li>
+      <li><a href="index.html#futuros">Projetos futuros</a></li>
+      <li><a href="patrocinadores.html">Patrocinadores</a></li>
+      <li><a href="equipe.html">Nossa Equipe</a></li>
+      <li><a href="contato.html">Contato</a></li></ul></div>
+    <div><h4>Informações de contato</h4><address>
+      <span>LSI - Laboratório de Sistemas Integráveis<br>Av. Prof. Luciano Gualberto, Travessa 3, nº 158<br>Cidade Universitária, Butantã, São Paulo - SP</span>
+      <a href="mailto:hackerfabpoli@gmail.com">hackerfabpoli@gmail.com</a></address></div>
+  </div>
+  <div class="legal"><span>© 2026 HackerFab @ POLI USP. Todos os direitos reservados.</span><a href="https://www.poli.usp.br" target="_blank" rel="noopener noreferrer">Escola Politécnica da USP | poli.usp.br</a></div>
+</div></footer>
+</body></html>
